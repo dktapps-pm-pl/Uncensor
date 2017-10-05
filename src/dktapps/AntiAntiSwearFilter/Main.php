@@ -11,8 +11,8 @@ class Main extends PluginBase implements Listener{
 
 	/** @var string[] */
 	private $words = [];
-	/** @var string[] */
-	private $replacements = [];
+	/** @var string */
+	private $regex;
 
 	public function onEnable(){
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -26,19 +26,23 @@ class Main extends PluginBase implements Listener{
 			return;
 		}
 
-		$this->replacements = array_map(function($word){
-			return substr($word, 0, 1) . "\x1c" . substr($word, 1);
-		}, $this->words);
+		$this->regex = '/.*?(' . implode('|', array_map('preg_quote', $this->words)) . ').*?/i';
+	}
+
+	private function unfilter(string $message) : string{
+		return preg_replace_callback($this->regex, function($matches){
+			return str_replace($matches[1], $matches[1]{0} . "\x1c" . substr($matches[1], 1), $matches[0]);
+		}, $message);
 	}
 
 	public function onDataPacketSend(DataPacketSendEvent $event){
 		$pk = $event->getPacket();
 		if($pk instanceof TextPacket){
 			if($pk->type !== TextPacket::TYPE_TRANSLATION){
-				$pk->message = str_replace($this->words, $this->replacements, $pk->message);
+				$pk->message = $this->unfilter($pk->message);
 			}
 			foreach($pk->parameters as $k => $param){
-				$pk->parameters[$k] = str_replace($this->words, $this->replacements, $param);
+				$pk->parameters[$k] = $this->unfilter($pk->parameters[$k]);
 			}
 		}
 	}
