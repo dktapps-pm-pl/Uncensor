@@ -14,7 +14,7 @@ class Main extends PluginBase implements Listener{
 	/** @var string */
 	private $regex;
 
-	public function onEnable(){
+	public function onEnable() : void{
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 
 		if(file_exists($this->getDataFolder() . "profanity_filter.wlist")){
@@ -35,7 +35,7 @@ class Main extends PluginBase implements Listener{
 		}, $message);
 	}
 
-	public function onDataPacketSend(DataPacketSendEvent $event){
+	public function onDataPacketSend(DataPacketSendEvent $event) : void{
 		$pk = $event->getPacket();
 		if($pk instanceof TextPacket){
 			if($pk->type !== TextPacket::TYPE_TRANSLATION){
