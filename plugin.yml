@@ -1,8 +1,8 @@
-name: AntiAntiSwearFilter
-main: dktapps\AntiAntiSwearFilter\Main
-version: 0.1.0
+name: Uncensor
+main: dktapps\Uncensor\Main
+version: 0.2.0
 api: [3.0.0]
 load: POSTWORLD
 author: dktapps
 description: Circumvents Microsoft's terrible Minecraft built-in chat filter
-website: https://github.com/dktapps/AntiAntiSwearFilter
+website: https://github.com/dktapps/Uncensor

@@ -1,6 +1,6 @@
 <?php
 
-namespace dktapps\AntiAntiSwearFilter;
+namespace dktapps\Uncensor;
 
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketSendEvent;
