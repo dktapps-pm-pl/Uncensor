@@ -2,6 +2,6 @@
 branches:
 - master
 projects:
-  AntiAntiSwearFilter:
+  Uncensor:
     path: ""
 ...
