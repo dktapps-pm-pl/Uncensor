@@ -31,7 +31,7 @@ class Main extends PluginBase implements Listener{
 
 	private function unfilter(string $message) : string{
 		return preg_replace_callback($this->regex, function($matches){
-			return str_replace($matches[1], $matches[1]{0} . "\x1c" . substr($matches[1], 1), $matches[0]);
+			return str_replace($matches[1], $matches[1]{0} . "\u{FEFF}" . substr($matches[1], 1), $matches[0]);
 		}, $message);
 	}
 
