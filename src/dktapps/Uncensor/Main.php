@@ -26,12 +26,12 @@ class Main extends PluginBase implements Listener{
 			return;
 		}
 
-		$this->regex = '/.*?(' . implode('|', array_map('preg_quote', $this->words)) . ').*?/i';
+		$this->regex = '/.*?(' . implode('|', array_map('preg_quote', $this->words)) . ').*?/iu';
 	}
 
 	private function unfilter(string $message) : string{
 		return preg_replace_callback($this->regex, function($matches){
-			return str_replace($matches[1], $matches[1]{0} . "\x1c" . substr($matches[1], 1), $matches[0]);
+			return str_replace($matches[1], mb_substr($matches[1], 0, 1) . "\u{FEFF}" . mb_substr($matches[1], 1), $matches[0]);
 		}, $message);
 	}
 
